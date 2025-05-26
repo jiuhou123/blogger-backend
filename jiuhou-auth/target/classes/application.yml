@@ -1,0 +1,7 @@
+jwt:
+  # JWT加解密使用的密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # JWT的有效期（单位：秒）
+  expiration: 7200
+  # 刷新令牌的有效期（单位：秒）
+  refresh-expiration: 604800 
