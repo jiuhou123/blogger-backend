@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.1 http://maven.apache.org/xsd/assembly-2.1.1.xsd">
+    <id>package</id>
+    <formats>
+        <format>zip</format>
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    
+    <fileSets>
+        <!-- 只打包 src/main/resources 下的 SQL 脚本 -->
+        <fileSet>
+            <directory>src/main/resources/db/migration</directory>
+            <outputDirectory>sql</outputDirectory>
+            <includes>
+                <include>*.sql</include>
+            </includes>
+        </fileSet>
+        <!-- 部署脚本 -->
+        <fileSet>
+            <directory>scripts</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- 配置文件模板和实际配置 -->
+        <fileSet>
+            <directory>config</directory>
+            <outputDirectory>config</outputDirectory>
+            <includes>
+                <include>db.conf</include>
+            </includes>
+        </fileSet>
+        <!-- 操作文档 README.md -->
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <outputDirectory>docs</outputDirectory>
+            <includes>
+                <include>README.md</include>
+            </includes>
+        </fileSet>
+        <!-- docs 目录下所有 md 文档 -->
+        <fileSet>
+            <directory>${project.basedir}/docs</directory>
+            <outputDirectory>docs</outputDirectory>
+            <includes>
+                <include>*.md</include>
+            </includes>
+        </fileSet>
+        <!-- 打包 pom.xml 到产物根目录 -->
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>pom.xml</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
