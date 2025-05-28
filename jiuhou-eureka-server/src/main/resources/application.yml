@@ -3,13 +3,30 @@ server:
 
 spring:
   application:
-    name: eureka-server
+    name: jiuhou-eureka-server
 
 eureka:
   instance:
     hostname: localhost
   client:
-    registerWithEureka: false
-    fetchRegistry: false
-    serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/ 
+    # 是否将自己注册到Eureka Server
+    register-with-eureka: false
+    # 是否从Eureka Server获取注册信息
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    # 关闭自我保护机制
+    enable-self-preservation: false
+    # 清理无效节点的时间间隔（默认60000毫秒）
+    eviction-interval-timer-in-ms: 60000
+
+# Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always 

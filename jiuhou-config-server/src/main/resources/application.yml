@@ -1,18 +1,47 @@
+# 服务器配置
 server:
-  port: 8888
+  port: 8888  # 配置中心服务端口
 
+# Spring 相关配置
 spring:
   application:
-    name: config-server
+    name: config-server  # 服务名称
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/config
-  profiles:
-    active: native
+        git:
+          # Git 仓库地址
+          uri: https://github.com/jiuhou123/jiuhou-config.git
+          # 搜索配置文件的目录路径
+          search-paths: 
+            - blogger-config  # 配置文件根目录
+            - blogger-config/{application}  # 应用特定配置目录
+          default-label: ${CONFIG_REPO_BRANCH:master}  # Git 分支，默认 master
+          username: ${GITHUB_USERNAME:jiuhou123}  # GitHub 用户名
+          password: ${GITHUB_TOKEN:你的GitHub Token}  # GitHub 访问令牌
+          clone-on-start: true  # 启动时克隆配置
+          force-pull: true  # 强制拉取最新配置
 
+  # 安全认证配置
+  security:
+    user:
+      name: ${CONFIG_SERVER_USERNAME:admin}  # 配置中心访问用户名
+      password: ${CONFIG_SERVER_PASSWORD:admin}  # 配置中心访问密码
+
+# Eureka 客户端配置
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/ 
+      defaultZone: http://localhost:8761/eureka/  # 注册中心地址
+  instance:
+    prefer-ip-address: true  # 使用 IP 地址注册
+
+# Spring Boot Actuator 监控配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 开启所有监控端点
+  endpoint:
+    health:
+      show-details: always  # 显示详细的健康检查信息 

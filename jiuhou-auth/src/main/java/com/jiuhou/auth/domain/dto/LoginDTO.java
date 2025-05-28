@@ -2,10 +2,10 @@ package com.jiuhou.auth.domain.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
- * 登录请求对象
+ * 登录请求DTO
  */
 @Data
 public class LoginDTO {

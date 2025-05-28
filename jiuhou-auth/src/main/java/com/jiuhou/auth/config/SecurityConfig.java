@@ -37,17 +37,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 // 关闭 csrf
-                .csrf().disable()
+                .csrf(csrf -> csrf.disable())
                 // 不通过Session获取SecurityContext
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 下面开始设置权限
-                .authorizeRequests()
-                // 对于登录接口 允许匿名访问
-                .antMatchers("/auth/login", "/auth/register").anonymous()
-                // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated()
-                .and()
+                .authorizeHttpRequests(auth -> auth
+                        // 对于登录接口 允许匿名访问
+                        .requestMatchers("/auth/login", "/auth/register").anonymous()
+                        // 除上面外的所有请求全部需要鉴权认证
+                        .anyRequest().authenticated())
                 // 添加JWT过滤器
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
