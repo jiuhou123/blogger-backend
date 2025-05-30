@@ -4,6 +4,8 @@ server:
 
 # Spring 相关配置
 spring:
+  profiles:
+    active: local
   application:
     name: config-server  # 服务名称
   cloud:
