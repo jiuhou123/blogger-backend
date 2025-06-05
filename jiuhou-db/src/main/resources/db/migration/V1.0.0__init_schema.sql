@@ -1,4 +1,6 @@
--- ÓÃ»§±í
+SET client_encoding TO 'UTF8';
+
+-- ç³»ç»Ÿç”¨æˆ·è¡¨
 CREATE TABLE IF NOT EXISTS sys_user (
     id BIGSERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -9,16 +11,16 @@ CREATE TABLE IF NOT EXISTS sys_user (
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-COMMENT ON TABLE sys_user IS 'ÏµÍ³ÓÃ»§±í';
-COMMENT ON COLUMN sys_user.id IS 'ÓÃ»§ID';
-COMMENT ON COLUMN sys_user.username IS 'ÓÃ»§Ãû';
-COMMENT ON COLUMN sys_user.password IS 'ÃÜÂë';
-COMMENT ON COLUMN sys_user.email IS 'ÓÊÏä';
-COMMENT ON COLUMN sys_user.status IS '×´Ì¬£¨0Õı³£ 1Í£ÓÃ£©';
-COMMENT ON COLUMN sys_user.create_time IS '´´½¨Ê±¼ä';
-COMMENT ON COLUMN sys_user.update_time IS '¸üĞÂÊ±¼ä';
+COMMENT ON TABLE sys_user IS 'ç³»ç»Ÿç”¨æˆ·è¡¨';
+COMMENT ON COLUMN sys_user.id IS 'ç”¨æˆ·ID';
+COMMENT ON COLUMN sys_user.username IS 'ç”¨æˆ·è´¦å·';
+COMMENT ON COLUMN sys_user.password IS 'å¯†ç ';
+COMMENT ON COLUMN sys_user.email IS 'é‚®ç®±';
+COMMENT ON COLUMN sys_user.status IS 'çŠ¶æ€ï¼ˆ0æ­£å¸¸ 1åœç”¨ï¼‰';
+COMMENT ON COLUMN sys_user.create_time IS 'åˆ›å»ºæ—¶é—´';
+COMMENT ON COLUMN sys_user.update_time IS 'æ›´æ–°æ—¶é—´';
 
--- ·ÖÀà±í
+-- åšå®¢åˆ†ç±»è¡¨
 CREATE TABLE IF NOT EXISTS blog_category (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
@@ -27,14 +29,14 @@ CREATE TABLE IF NOT EXISTS blog_category (
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-COMMENT ON TABLE blog_category IS '²©¿Í·ÖÀà±í';
-COMMENT ON COLUMN blog_category.id IS '·ÖÀàID';
-COMMENT ON COLUMN blog_category.name IS '·ÖÀàÃû³Æ';
-COMMENT ON COLUMN blog_category.description IS '·ÖÀàÃèÊö';
-COMMENT ON COLUMN blog_category.create_time IS '´´½¨Ê±¼ä';
-COMMENT ON COLUMN blog_category.update_time IS '¸üĞÂÊ±¼ä';
+COMMENT ON TABLE blog_category IS 'åšå®¢åˆ†ç±»è¡¨';
+COMMENT ON COLUMN blog_category.id IS 'åˆ†ç±»ID';
+COMMENT ON COLUMN blog_category.name IS 'åˆ†ç±»åç§°';
+COMMENT ON COLUMN blog_category.description IS 'åˆ†ç±»æè¿°';
+COMMENT ON COLUMN blog_category.create_time IS 'åˆ›å»ºæ—¶é—´';
+COMMENT ON COLUMN blog_category.update_time IS 'æ›´æ–°æ—¶é—´';
 
--- ±êÇ©±í
+-- åšå®¢æ ‡ç­¾è¡¨
 CREATE TABLE IF NOT EXISTS blog_tag (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
@@ -42,13 +44,13 @@ CREATE TABLE IF NOT EXISTS blog_tag (
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-COMMENT ON TABLE blog_tag IS '²©¿Í±êÇ©±í';
-COMMENT ON COLUMN blog_tag.id IS '±êÇ©ID';
-COMMENT ON COLUMN blog_tag.name IS '±êÇ©Ãû³Æ';
-COMMENT ON COLUMN blog_tag.create_time IS '´´½¨Ê±¼ä';
-COMMENT ON COLUMN blog_tag.update_time IS '¸üĞÂÊ±¼ä';
+COMMENT ON TABLE blog_tag IS 'åšå®¢æ ‡ç­¾è¡¨';
+COMMENT ON COLUMN blog_tag.id IS 'æ ‡ç­¾ID';
+COMMENT ON COLUMN blog_tag.name IS 'æ ‡ç­¾åç§°';
+COMMENT ON COLUMN blog_tag.create_time IS 'åˆ›å»ºæ—¶é—´';
+COMMENT ON COLUMN blog_tag.update_time IS 'æ›´æ–°æ—¶é—´';
 
--- ÎÄÕÂ±í
+-- åšå®¢æ–‡ç« è¡¨
 CREATE TABLE IF NOT EXISTS blog_post (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -62,17 +64,17 @@ CREATE TABLE IF NOT EXISTS blog_post (
     FOREIGN KEY (category_id) REFERENCES blog_category(id)
 );
 
-COMMENT ON TABLE blog_post IS '²©¿ÍÎÄÕÂ±í';
-COMMENT ON COLUMN blog_post.id IS 'ÎÄÕÂID';
-COMMENT ON COLUMN blog_post.user_id IS '×÷ÕßID';
-COMMENT ON COLUMN blog_post.category_id IS '·ÖÀàID';
-COMMENT ON COLUMN blog_post.title IS '±êÌâ';
-COMMENT ON COLUMN blog_post.content IS 'ÄÚÈİ';
-COMMENT ON COLUMN blog_post.status IS '×´Ì¬£¨0²İ¸å 1·¢²¼£©';
-COMMENT ON COLUMN blog_post.create_time IS '´´½¨Ê±¼ä';
-COMMENT ON COLUMN blog_post.update_time IS '¸üĞÂÊ±¼ä';
+COMMENT ON TABLE blog_post IS 'åšå®¢æ–‡ç« è¡¨';
+COMMENT ON COLUMN blog_post.id IS 'æ–‡ç« ID';
+COMMENT ON COLUMN blog_post.user_id IS 'ç”¨æˆ·ID';
+COMMENT ON COLUMN blog_post.category_id IS 'åˆ†ç±»ID';
+COMMENT ON COLUMN blog_post.title IS 'æ ‡é¢˜';
+COMMENT ON COLUMN blog_post.content IS 'å†…å®¹';
+COMMENT ON COLUMN blog_post.status IS 'çŠ¶æ€ï¼ˆ0è‰ç¨¿ 1å‘å¸ƒï¼‰';
+COMMENT ON COLUMN blog_post.create_time IS 'åˆ›å»ºæ—¶é—´';
+COMMENT ON COLUMN blog_post.update_time IS 'æ›´æ–°æ—¶é—´';
 
--- ÎÄÕÂ±êÇ©¹ØÁª±í
+-- åšå®¢æ–‡ç« æ ‡ç­¾å…³è”è¡¨
 CREATE TABLE IF NOT EXISTS blog_post_tag (
     post_id BIGINT NOT NULL,
     tag_id BIGINT NOT NULL,
@@ -81,11 +83,11 @@ CREATE TABLE IF NOT EXISTS blog_post_tag (
     FOREIGN KEY (tag_id) REFERENCES blog_tag(id)
 );
 
-COMMENT ON TABLE blog_post_tag IS 'ÎÄÕÂ±êÇ©¹ØÁª±í';
-COMMENT ON COLUMN blog_post_tag.post_id IS 'ÎÄÕÂID';
-COMMENT ON COLUMN blog_post_tag.tag_id IS '±êÇ©ID';
+COMMENT ON TABLE blog_post_tag IS 'åšå®¢æ–‡ç« æ ‡ç­¾å…³è”è¡¨';
+COMMENT ON COLUMN blog_post_tag.post_id IS 'æ–‡ç« ID';
+COMMENT ON COLUMN blog_post_tag.tag_id IS 'æ ‡ç­¾ID';
 
--- ÆÀÂÛ±í
+-- åšå®¢è¯„è®ºè¡¨
 CREATE TABLE IF NOT EXISTS blog_comment (
     id BIGSERIAL PRIMARY KEY,
     post_id BIGINT NOT NULL,
@@ -99,12 +101,12 @@ CREATE TABLE IF NOT EXISTS blog_comment (
     FOREIGN KEY (user_id) REFERENCES sys_user(id)
 );
 
-COMMENT ON TABLE blog_comment IS '²©¿ÍÆÀÂÛ±í';
-COMMENT ON COLUMN blog_comment.id IS 'ÆÀÂÛID';
-COMMENT ON COLUMN blog_comment.post_id IS 'ÎÄÕÂID';
-COMMENT ON COLUMN blog_comment.user_id IS 'ÓÃ»§ID';
-COMMENT ON COLUMN blog_comment.content IS 'ÆÀÂÛÄÚÈİ';
-COMMENT ON COLUMN blog_comment.parent_id IS '¸¸ÆÀÂÛID';
-COMMENT ON COLUMN blog_comment.del_flag IS 'É¾³ı±êÖ¾£¨0´ú±í´æÔÚ 1´ú±íÉ¾³ı£©';
-COMMENT ON COLUMN blog_comment.create_time IS '´´½¨Ê±¼ä';
-COMMENT ON COLUMN blog_comment.update_time IS '¸üĞÂÊ±¼ä';
+COMMENT ON TABLE blog_comment IS 'åšå®¢è¯„è®ºè¡¨';
+COMMENT ON COLUMN blog_comment.id IS 'è¯„è®ºID';
+COMMENT ON COLUMN blog_comment.post_id IS 'æ–‡ç« ID';
+COMMENT ON COLUMN blog_comment.user_id IS 'ç”¨æˆ·ID';
+COMMENT ON COLUMN blog_comment.content IS 'è¯„è®ºå†…å®¹';
+COMMENT ON COLUMN blog_comment.parent_id IS 'çˆ¶è¯„è®ºID';
+COMMENT ON COLUMN blog_comment.del_flag IS 'åˆ é™¤æ ‡å¿—ï¼ˆ0ä»£è¡¨å­˜åœ¨ 1ä»£è¡¨åˆ é™¤ï¼‰';
+COMMENT ON COLUMN blog_comment.create_time IS 'åˆ›å»ºæ—¶é—´';
+COMMENT ON COLUMN blog_comment.update_time IS 'æ›´æ–°æ—¶é—´';
