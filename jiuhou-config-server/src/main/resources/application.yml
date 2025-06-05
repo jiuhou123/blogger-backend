@@ -13,14 +13,13 @@ spring:
       server:
         git:
           # Git 仓库地址
-          uri: https://github.com/jiuhou123/jiuhou-config.git
           # 搜索配置文件的目录路径
           search-paths: 
             - blogger-config  # 配置文件根目录
             - blogger-config/{application}  # 应用特定配置目录
-          default-label: ${CONFIG_REPO_BRANCH:master}  # Git 分支，默认 master
-          username: ${GITHUB_USERNAME:jiuhou123}  # GitHub 用户名
-          password: ${GITHUB_TOKEN:你的GitHub Token}  # GitHub 访问令牌
+          default-label: master  # Git 分支，默认 master
+          username: ${GITHUB_USERNAME:}  # GitHub 用户名
+          password: ${GITHUB_TOKEN:}  # GitHub 访问令牌
           clone-on-start: true  # 启动时克隆配置
           force-pull: true  # 强制拉取最新配置
 
