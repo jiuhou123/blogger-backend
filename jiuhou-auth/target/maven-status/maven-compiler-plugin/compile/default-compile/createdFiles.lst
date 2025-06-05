@@ -7,9 +7,11 @@ com\jiuhou\auth\controller\AuthController.class
 com\jiuhou\auth\domain\vo\LoginVO.class
 com\jiuhou\auth\domain\vo\UserVO.class
 com\jiuhou\auth\service\impl\UserServiceImpl.class
+com\jiuhou\auth\handler\MyMetaObjectHandler.class
 com\jiuhou\auth\domain\dto\LoginDTO.class
 com\jiuhou\auth\mapper\UserMapper.class
 com\jiuhou\auth\config\SecurityConfig.class
 com\jiuhou\auth\filter\JwtAuthenticationFilter.class
 com\jiuhou\auth\AuthApplication.class
+com\jiuhou\auth\dto\UserRegisterRequest.class
 com\jiuhou\auth\handler\GlobalExceptionHandler.class

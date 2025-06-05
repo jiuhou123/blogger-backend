@@ -2,21 +2,25 @@ package com.jiuhou.auth.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.jiuhou.common.core.domain.BaseEntity;
+// import com.jiuhou.common.core.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+
+import java.time.LocalDateTime;
 
 /**
  * 用户对象
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @TableName("sys_user")
-public class User extends BaseEntity {
+public class User { // 不再继承 BaseEntity
 
     /** 用户ID */
     @TableId
-    private Long userId;
+    private Long id;
 
     /** 用户账号 */
     private String username;
@@ -44,4 +48,12 @@ public class User extends BaseEntity {
 
     /** 删除标志（0代表存在 1代表删除） */
     private String delFlag;
+
+    /** 创建时间 */
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    /** 更新时间 */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 }

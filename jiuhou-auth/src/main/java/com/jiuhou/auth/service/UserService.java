@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.jiuhou.auth.domain.User;
 import com.jiuhou.auth.domain.dto.LoginDTO;
 import com.jiuhou.auth.domain.vo.LoginVO;
+import com.jiuhou.auth.dto.UserRegisterRequest;
 
 /**
  * 用户服务接口
@@ -21,10 +22,10 @@ public interface UserService extends IService<User> {
     /**
      * 注册
      *
-     * @param user 用户信息
+     * @param registerRequest 用户注册信息
      * @return 注册结果
      */
-    boolean register(User user);
+    boolean register(UserRegisterRequest registerRequest);
 
     /**
      * 根据用户名查询用户
@@ -33,6 +34,14 @@ public interface UserService extends IService<User> {
      * @return 用户信息
      */
     User getByUsername(String username);
+
+    /**
+     * 根据邮箱查询用户
+     *
+     * @param email 邮箱
+     * @return 用户信息
+     */
+    User getByEmail(String email);
 
     /**
      * 修改密码
@@ -51,4 +60,19 @@ public interface UserService extends IService<User> {
      * @return 是否成功
      */
     boolean resetPassword(Long userId);
+
+    /**
+     * 刷新用户令牌
+     * 
+     * @param refreshToken 刷新令牌
+     * @return 新的令牌对和用户信息
+     */
+    LoginVO refreshToken(String refreshToken);
+
+    /**
+     * 用户登出
+     *
+     * @param userId 用户ID
+     */
+    void logout(Long userId);
 }

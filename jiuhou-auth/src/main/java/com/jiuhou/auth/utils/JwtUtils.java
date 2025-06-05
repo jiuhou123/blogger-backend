@@ -1,8 +1,8 @@
 package com.jiuhou.auth.utils;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -43,9 +43,9 @@ public class JwtUtils {
      */
     private String generateToken(Map<String, Object> claims, long expiration) {
         return Jwts.builder()
-                .claims(claims)
-                .expiration(new Date(System.currentTimeMillis() + expiration * 1000))
-                .signWith(getSigningKey())
+                .setClaims(claims)
+                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -56,10 +56,11 @@ public class JwtUtils {
      * @return 数据声明
      */
     private Claims getClaimsFromToken(String token) {
-        JwtParser parser = Jwts.parser()
-                .verifyWith(getSigningKey())
-                .build();
-        return parser.parseSignedClaims(token).getPayload();
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     /**

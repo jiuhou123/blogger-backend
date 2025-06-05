@@ -17,10 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
-
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     /**
      * 密码加密器
@@ -34,7 +31,8 @@ public class SecurityConfig {
      * Security过滤器链配置
      */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter)
+            throws Exception {
         return http
                 // 关闭 csrf
                 .csrf(csrf -> csrf.disable())
@@ -42,8 +40,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 下面开始设置权限
                 .authorizeHttpRequests(auth -> auth
-                        // 对于登录接口 允许匿名访问
-                        .requestMatchers("/auth/login", "/auth/register").anonymous()
+                        // 对于登录接口和其他公共接口 允许完全访问
+                        .requestMatchers("/auth/login", "/auth/register", "/auth/refresh",
+                                "/swagger-ui.html", "/swagger-ui/**",
+                                "/v3/api-docs", "/v3/api-docs/**")
+                        .permitAll()
                         // 除上面外的所有请求全部需要鉴权认证
                         .anyRequest().authenticated())
                 // 添加JWT过滤器
