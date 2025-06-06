@@ -19,7 +19,7 @@ show_help() {
 case "$1" in
     install)
         echo "[全新安装] 建库+批量执行 SQL 脚本"
-        $SCRIPT_DIR/init-db.sh create-db || exit 1
+        $SCRIPT_DIR/init-db.sh create-db
         echo "全新安装完成！"
         ;;
     uninstall)

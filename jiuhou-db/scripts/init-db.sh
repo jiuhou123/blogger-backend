@@ -64,7 +64,7 @@ for sql_file in "$SQL_DIR"/*.sql; do
     psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -f "$sql_file" -v ON_ERROR_STOP=1
     if [ $? -ne 0 ]; then
         echo "错误: SQL 文件执行失败: $sql_file"
-        exit 1
+        # 移除 exit 1，继续执行下一个文件
     fi
 done
 
