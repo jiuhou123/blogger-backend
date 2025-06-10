@@ -1,16 +1,21 @@
+logging:
+  level:
+    org.springframework.web: DEBUG
+    com.fasterxml.jackson.databind: DEBUG
+    org.springframework.http.converter: DEBUG
+
 spring:
   application:
     name: blog-service
-  cloud:
-    config:
-      uri: http://localhost:8888
-      fail-fast: true
   
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/jiuhou_blog
     username: postgres
     password: postgres
+
+  mvc:
+    log-request-details: true
 
 server:
   port: 8080
@@ -26,4 +31,15 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-  mapper-locations: classpath*:/mapper/**/*.xml 
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+springdoc:
+  api-docs:
+    enabled: true
+    resolve-schema-properties: true
+  swagger-ui:
+    enabled: true
+  model-and-view:
+    operations-sort-value: JAVADOC
+  cache:
+    disabled: true 

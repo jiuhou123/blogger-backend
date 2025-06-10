@@ -1,4 +1,6 @@
 # 强制所有 shell 脚本和常见文本文件用 LF 行尾
+# 如遇 CRLF/LF warning，可执行：git add --renormalize .
+# 这样 Git 会自动按本文件规范所有行尾，彻底消除 warning
 *.sh text eol=lf
 *.md text eol=lf
 *.yml text eol=lf

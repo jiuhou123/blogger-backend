@@ -1,11 +1,15 @@
 com\jiuhou\auth\aspect\PermissionAspect.class
 com\jiuhou\auth\service\UserService.class
 com\jiuhou\auth\utils\JwtUtils.class
+com\jiuhou\auth\dto\RefreshTokenRequest.class
 com\jiuhou\auth\annotation\RequirePermission.class
 com\jiuhou\auth\domain\User.class
 com\jiuhou\auth\controller\AuthController.class
 com\jiuhou\auth\domain\vo\LoginVO.class
+com\jiuhou\auth\utils\ServiceExceptionMessageHolder.class
+com\jiuhou\auth\filter\ServiceExceptionHandlingFilter.class
 com\jiuhou\auth\domain\vo\UserVO.class
+com\jiuhou\auth\filter\ExceptionLoggingFilter.class
 com\jiuhou\auth\service\impl\UserServiceImpl.class
 com\jiuhou\auth\handler\MyMetaObjectHandler.class
 com\jiuhou\auth\domain\dto\LoginDTO.class
