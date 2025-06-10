@@ -298,4 +298,31 @@ This document records the process of debugging significant bugs encountered duri
 
 **Verification:** 修改 `UserServiceImpl.register` 方法，在抛出 `ServiceException` 前将消息存储到 `ServiceExceptionMessageHolder` 的 `ThreadLocal` 中。重新测试注册接口，返回的响应体中的 `msg` 字段正确显示了具体的业务错误消息。
 
-**Lessons Learned:** 针对 Spring Security 可能导致的异常消息丢失问题，之前实现的 `ThreadLocal` + 自定义过滤器变通方案可以应用于其他受影响的接口。 
+**Lessons Learned:** 针对 Spring Security 可能导致的异常消息丢失问题，之前实现的 `ThreadLocal` + 自定义过滤器变通方案可以应用于其他受影响的接口。
+
+---
+
+### Date: 2025-06-10
+
+**Summary:** `jiuhou-blog-service` 模块启动时，Spring 容器无法找到 `CategoryService` 和 `CategoryMapper` 的 Bean。
+
+**Symptoms:** 应用程序启动失败，日志显示 `org.springframework.beans.factory.UnsatisfiedDependencyException`，具体指出 `Field categoryService in com.jiuhou.blog.controller.CategoryController required a bean of type 'com.jiuhou.blog.service.CategoryService' that could not be found.` 随后又出现 `No qualifying bean of type 'com.jiuhou.blog.mapper.CategoryMapper' available`。
+
+**Investigation:**
+- 检查 `jiuhou-blog-service/src/main/java/com/jiuhou/blog/service/impl/CategoryServiceImpl.java` 文件，发现 `CategoryServiceImpl` 类缺少 `@Service` 注解。
+- 检查 `jiuhou-blog-service/src/main/java/com/jiuhou/blog/mapper/CategoryMapper.java` 文件，发现 `CategoryMapper` 接口缺少 `@Mapper` 注解。
+- 进一步检查 `jiuhou-blog-service/src/main/java/com/jiuhou/blog/mapper/` 目录下其他 Mapper 接口（`BlogPostMapper`、`ArticleMapper`、`CommentMapper`、`TagMapper`），发现它们也缺少 `@Mapper` 注解。
+
+**Root Cause:** Spring Boot 应用程序在启动时，无法通过组件扫描识别并注册 `CategoryServiceImpl` 和各个 Mapper 接口为 Spring Bean。这是因为 `CategoryServiceImpl` 缺少 `@Service` 注解，而所有 Mapper 接口缺少 `@Mapper` 注解。
+
+**Solution:**
+- 在 `jiuhou-blog-service/src/main/java/com/jiuhou/blog/service/impl/CategoryServiceImpl.java` 文件的 `CategoryServiceImpl` 类上添加 `@Service` 注解。
+- 在 `jiuhou-blog-service/src/main/java/com/jiuhou/blog/mapper/CategoryMapper.java` 文件的 `CategoryMapper` 接口上添加 `@Mapper` 注解。
+- 在 `jiuhou-blog-service/src/main/java/com/jiuhou/blog/mapper/BlogPostMapper.java` 文件的 `BlogPostMapper` 接口上添加 `@Mapper` 注解。
+- 在 `jiuhou-blog-service/src/main/java/com/jiuhou/blog/mapper/ArticleMapper.java` 文件的 `ArticleMapper` 接口上添加 `@Mapper` 注解。
+- 在 `jiuhou-blog-service/src/main/java/com/jiuhou/blog/mapper/CommentMapper.java` 文件的 `CommentMapper` 接口上添加 `@Mapper` 注解。
+- 在 `jiuhou-blog-service/src/main/java/com/jiuhou/blog/mapper/TagMapper.java` 文件的 `TagMapper` 接口上添加 `@Mapper` 注解。
+
+**Verification:** 重新编译并启动 `jiuhou-blog-service` 模块，所有相关的 Bean 依赖注入错误消失，模块成功启动并注册到 Eureka。
+
+**Lessons Learned:** 确保所有需要被 Spring 容器管理的服务实现类、数据访问接口（Mapper）都使用了正确的 Spring (`@Service`) 或 MyBatis (`@Mapper`) 注解，以便 Spring 能够进行组件扫描和 Bean 的自动装配。 
